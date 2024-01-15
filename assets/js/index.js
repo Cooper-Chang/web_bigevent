@@ -1,5 +1,5 @@
 $(function(){
-    getUserInfo()
+    getUserInfo();
 
     $('#btnLogout').on('click', function(e){
         layer.confirm('确定退出登录?', {icon: 3, title:'提示'}, function(index){
@@ -14,31 +14,33 @@ $(function(){
 })
 
 function getUserInfo(){
-    $.ajax({
-        method: 'GET',
-        url: '/my/userinfo',
-        //headers 配置用户认证结果
-        success: function(res){
-            if(res.status !==0){
-                return layui.layer.msg('获取用户信息失败！')
-            }
-            renderAvatar(res.data);
-        },
-        error: function(res){
-            return layui.layer.msg('获取用户信息失败！')
-        },
-        
-
-        
-    })
+    data = {
+        'username': 'a123',
+        'nickname': '大家好',
+        'email': '1234@163.com',
+    }
+    renderAvatar(data);
+    // $.ajax({
+    //     method: 'GET',
+    //     url: '/my/userinfo',
+    //     //headers 配置用户认证结果
+    //     success: function(res){
+    //         if(res.status !==0){
+    //             return layui.layer.msg('获取用户信息失败！')
+    //         }
+    //         renderAvatar(res.data);
+    //     },
+    //     error: function(res){
+    //         return layui.layer.msg('获取用户信息失败！')
+    //     },
+    // })
 }
-
+    
 function renderAvatar(user){
     var name = user.nickname || user.username;
-    var email = user.email;
     $('#welcome').html('欢迎&nbsp;' + name);
     // 按需要渲染用户头像
-    if(user.user_pic !== null){
+    if(user.user_pic !== undefined){
         $('.layui-nav-img').attr('src', user.user_pic).show();
         $('.text-avatar').hide();
     }else{
@@ -47,4 +49,6 @@ function renderAvatar(user){
         $('.text-avatar').html(first).show();
     }
 }
+
+
 
